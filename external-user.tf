@@ -51,6 +51,6 @@ resource "null_resource" "await_access" {
   }
 
   triggers = {
-    user = aws_iam_user.dns_user.arn
+    user = join("", aws_iam_user.dns_user.*.arn)
   }
 }
