@@ -40,6 +40,15 @@ resource "aws_iam_user_policy" "attachment" {
 }
 
 resource "aws_iam_access_key" "dns_user" {
+  depends_on = [null_resource.await_access]
   count = var.external_account ? 1 : 0
   user  = join("", aws_iam_user.dns_user.*.name)
+}
+
+resource "null_resource" "await_access" {
+  depends_on = [aws_iam_user.dns_user]
+
+  provisioner "local-exex" {
+    command = "sleep 20"
+  }
 }
