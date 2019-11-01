@@ -66,3 +66,10 @@ variable "aws_region" {
   description = "AWS Region to deploy the ACM certificate into"
 }
 
+variable "aws_assume_role_arn" {
+  type        = string
+  default     = ""
+  description = "The AWS Role ARN to assume to create resources"
+}
+
+

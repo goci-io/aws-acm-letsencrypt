@@ -33,6 +33,7 @@ module "acme" {
 | certificate_email | E-Mail address to use for the certificate and contact options | - |
 | enabled | Whether to create resources or not | `true` |
 | aws_region | AWS Region to deploy the ACM into. Note that sometimes AWS requires the certificate to be in us-east-1 | - |
+| aws_assume_role_arn | AWS Role to assume to create resources | `""` |
 
 ### Migration
 
