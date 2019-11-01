@@ -33,3 +33,12 @@ module "acme" {
 | certificate_email | E-Mail address to use for the certificate and contact options | - |
 | enabled | Whether to create resources or not | `true` |
 | aws_region | AWS Region to deploy the ACM into. Note that sometimes AWS requires the certificate to be in us-east-1 | - |
+
+### Migration
+
+When migrating or changing the certificate we may have to replace the existing ACM certificate. 
+If you deploy multiple terraform modules and other resources are still referencing the old certificate we suggest to do the following:
+
+1. Deploy a new version of this module (with new state)  
+2. Replace remote state references to the new version  
+3. Destroy the old module and state
