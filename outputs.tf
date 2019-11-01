@@ -3,8 +3,8 @@ output "certificate_url" {
   value = join("", acme_certificate.certificate.*.id)
 }
 
-output "private_key" {
-  value     = join("", tls_private_key.private_key.*.private_key_pem)
+output "certificate_key" {
+  value     = join("", acme_certificate.certificate.*.private_key_pem)
   sensitive = true
 }
 
