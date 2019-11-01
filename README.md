@@ -5,11 +5,29 @@
 This module requests a new certificate from [letsencrypt](http://letsencrypt.org) and uploads it to AWS ACM. 
 The certificate validation is done via Route53 DNS.
 
+### Usage
+
+```hcl
+module "acme" {
+  source            = "git::https://github.com/goci-io/aws-acm-letsencrypt.git?ref=tags/<latest-version>"
+  namespace         = "goci"
+  stage             = "staging"
+  name              = "api"
+  domain            = "api.staging.eu1.goci.io"
+  certificate_email = "certs<at>goci.io"
+  aws_region        = "eu-central-1"
+}
+```
 
 ### Configuration
 
 | Name | Description | Default |
 |-----------------|----------------------------------------|---------|
+| namespace | Company or organiaztion prefix | - |
+| stage | Stage the certificate is used for (relates to letsencrypt directory stage) | - |
+| region | Custom name for the region | `$aws_region` |
+| attributes | Additional attributes (e.g. `eu1`) | `[]` |
+| tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`) | `{}`
 | domain_name | The domain name to include in the certificate | - |
 | alternative_names | Subject alternative domain names | `[]` |
 | certificate_email | E-Mail address to use for the certificate and contact options | - |
