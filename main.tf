@@ -54,7 +54,7 @@ resource "acme_certificate" "certificate" {
 resource "aws_acm_certificate" "acme" {
   count             = var.enabled ? 1 : 0
   tags              = module.label.tags
-  private_key       = join("", tls_private_key.private_key.*.private_key_pem)
+  private_key       = join("", acme_certificate.certificate.*.private_key_pem)
   certificate_body  = join("", acme_certificate.certificate.*.certificate_pem)
   certificate_chain = join("", acme_certificate.certificate.*.issuer_pem)
 
