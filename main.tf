@@ -1,8 +1,9 @@
 
 locals {
-  domain_parts = split(".", var.domain_name)
-  region       = var.region == "" ? var.aws_region : var.region
-  hosted_zone  = join(".", slice(local.domain_parts, 1, length(local.domain_parts)))
+  domain_parts    = split(".", var.domain_name)
+  region          = var.region == "" ? var.aws_region : var.region
+  hosted_zone     = join(".", slice(local.domain_parts, 1, length(local.domain_parts)))
+  account_key_pem = var.account_key_pem == "" ? join("", acme_registration.reg.*.account_key_pem) : var.account_key_pem
 }
 
 module "label" {
@@ -26,14 +27,14 @@ resource "tls_private_key" "private_key" {
 }
 
 resource "acme_registration" "reg" {
-  count            = var.enabled ? 1 : 0
+  count            = var.enabled ? var.account_key_pem == "" ? 1 : 0
   account_key_pem = join("", tls_private_key.private_key.*.private_key_pem)
   email_address   = var.certificate_email
 }
 
 resource "acme_certificate" "certificate" {
   count                     = var.enabled ? 1 : 0
-  account_key_pem           = join("", acme_registration.reg.*.account_key_pem)
+  account_key_pem           = local.account_key_pem
   common_name               = var.domain_name
   subject_alternative_names = var.alternative_names
   min_days_remaining        = 40

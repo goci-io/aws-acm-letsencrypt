@@ -55,6 +55,12 @@ variable "alternative_names" {
   description = "List of subject alternative names for the certificate"
 }
 
+variable "account_key_pem" {
+  type        = string
+  default     = ""
+  description = "If private key for letsencrypt account already exists" 
+}
+
 variable "region" {
   type        = string
   default     = ""
