@@ -2,7 +2,7 @@
 locals {
   domain_parts = split(".", var.domain_name)
   region       = var.region == "" ? var.aws_region : var.region
-  hosted_zone  = join(".", slice(local.domain_parts, 0, length(local.domain_parts) - 1))
+  hosted_zone  = join(".", slice(local.domain_parts, 1, length(local.domain_parts)))
 }
 
 module "label" {
