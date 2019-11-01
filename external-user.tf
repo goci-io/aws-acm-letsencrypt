@@ -48,7 +48,7 @@ resource "aws_iam_access_key" "dns_user" {
 resource "null_resource" "await_access" {
   depends_on = [aws_iam_user.dns_user]
 
-  provisioner "local-exex" {
+  provisioner "local-exec" {
     command = "sleep 20"
   }
 }
