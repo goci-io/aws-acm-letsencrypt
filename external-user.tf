@@ -9,7 +9,7 @@ module "iam_label" {
 }
 
 data "aws_iam_policy_document" "dns_change" {
-  count = var.external_user ? 1 : 0
+  count = var.external_account ? 1 : 0
 
   statement {
     effect  = "Allow"
@@ -19,27 +19,27 @@ data "aws_iam_policy_document" "dns_change" {
       "route53:ListResourceRecordSets",
     ]
     resources = [
-      "arn:aws:route53:::hostedzone/${aws_route53_zone.validation.zone_id}",
+      "arn:aws:route53:::hostedzone/${data.aws_route53_zone.validation.zone_id}",
       "arn:aws:route53:::change/*",
     ]
   }
 }
 
 resource "aws_iam_user" "dns_user" {
-  count = var.external_user ? 1 : 0
+  count = var.external_account ? 1 : 0
   name  = module.iam_label.id
   tags  = module.iam_label.tags
   path  = "/service/"
 }
 
 resource "aws_iam_user_policy" "attachment" {
-  count  = var.external_user ? 1 : 0
+  count  = var.external_account ? 1 : 0
   name   = module.iam_label.id
   user   = join("", aws_iam_user.dns_user.*.name)
   policy = join("", data.aws_iam_policy_document.dns_change.*.json)
 }
 
 resource "aws_iam_access_key" "dns_user" {
-  count = var.external_user ? 1 : 0
+  count = var.external_account ? 1 : 0
   user  = join("", aws_iam_user.dns_user.*.name)
 }
