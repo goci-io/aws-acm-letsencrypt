@@ -78,4 +78,8 @@ variable "aws_assume_role_arn" {
   description = "The AWS Role ARN to assume to create resources"
 }
 
-
+variable "external_account" {
+  type        = bool
+  default     = false
+  description = "If hosted zone is created in a different AWS account the ACME provider cant perform the dns challange without access and secret key"
+}

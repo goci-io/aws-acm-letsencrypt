@@ -43,6 +43,7 @@ resource "acme_certificate" "certificate" {
     provider = "route53"
 
     config = {
+      AWS_DEFAULT_REGION = var.aws_region
       AWS_HOSTED_ZONE_ID = data.aws_route53_zone.validation.zone_id
     }
   }
