@@ -67,6 +67,12 @@ variable "region" {
   description = "Custom name for the region. Defaults to aws_region"
 }
 
+variable "acme_production" {
+  type        = bool
+  default     = false
+  description = "If true enforces the letsencrypt production directory" 
+}
+
 variable "aws_region" {
   type        = string
   description = "AWS Region to deploy the ACM certificate into"

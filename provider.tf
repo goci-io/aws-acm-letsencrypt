@@ -7,7 +7,7 @@ terraform {
 }
 
 locals {
-  acme_directory = contains(["prod", "production", "main"], var.stage) ? "acme-v02" : "acme-staging-v02"
+  acme_directory = var.acme_production || contains(["prod", "production", "main"], var.stage) ? "acme-v02" : "acme-staging-v02"
 }
 
 provider "acme" {
