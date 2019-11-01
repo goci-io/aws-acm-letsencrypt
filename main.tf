@@ -1,4 +1,18 @@
 
+locals {
+  region = var.region == "" ? var.aws_region : var.region
+}
+
+module "label" {
+  source     = "git::https://github.com/cloudposse/terraform-null-label.git?ref=tags/0.15.0"
+  namespace  = var.namespace
+  stage      = var.stage
+  delimiter  = var.delimiter
+  name       = var.name
+  attributes = var.attributes
+  tags       = merge(var.tags, { Region = local.region })
+}
+
 resource "tls_private_key" "private_key" {
   count     = var.enabled ? 1 : 0
   algorithm = "RSA"
