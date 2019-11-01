@@ -56,7 +56,7 @@ resource "aws_acm_certificate" "acme" {
   tags              = module.label.tags
   private_key       = join("", tls_private_key.private_key.*.private_key_pem)
   certificate_body  = join("", acme_certificate.certificate.*.certificate_pem)
-  certificate_chain = join("", acme_certificate.certificate.*.issuer_pem)
+  #certificate_chain = join("", acme_certificate.certificate.*.issuer_pem)
 
   lifecycle {
     # When migrating the certificate we suggest the following:
