@@ -35,6 +35,11 @@ module "acme" {
 | aws_region | AWS Region to deploy the ACM into. Note that sometimes AWS requires the certificate to be in us-east-1 | - |
 | aws_assume_role_arn | AWS Role to assume to create resources | `""` |
 
+### Renewal
+
+Certificates are automatically renewed when the `min_remaining_days` are less than the actual days to the expiry date.
+The terraform [ACME resource](https://www.terraform.io/docs/providers/acme/r/certificate.html#certificate-renewal) takes care of it so you must run your pipeline at least once within **40 days**.
+
 ### Migration
 
 When migrating or changing the certificate we may have to replace the existing ACM certificate. 
