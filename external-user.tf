@@ -35,11 +35,11 @@ resource "aws_iam_user" "dns_user" {
 resource "aws_iam_user_policy" "attachment" {
   count  = var.external_user ? 1 : 0
   name   = module.iam_label.id
-  user   = join("", aws_iam_user.dns_user.name)
-  policy = join("", data.aws_iam_policy_document.dns_change.json)
+  user   = join("", aws_iam_user.dns_user.*.name)
+  policy = join("", data.aws_iam_policy_document.dns_change.*.json)
 }
 
 resource "aws_iam_access_key" "dns_user" {
   count = var.external_user ? 1 : 0
-  user  = join("", aws_iam_user.dns_user.name)
+  user  = join("", aws_iam_user.dns_user.*.name)
 }
