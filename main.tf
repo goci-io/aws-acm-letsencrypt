@@ -1,6 +1,8 @@
 
 locals {
-  region = var.region == "" ? var.aws_region : var.region
+  domain_parts = split(".", var.domain_name)
+  region       = var.region == "" ? var.aws_region : var.region
+  hosted_zone  = join(".", slice(local.domain_parts, 0, length(local.domain_parts) - 1))
 }
 
 module "label" {
@@ -11,6 +13,11 @@ module "label" {
   name       = var.name
   attributes = var.attributes
   tags       = merge(var.tags, { Region = local.region })
+}
+
+data "aws_route53_zone" "validation" {
+  name         = format("%s.", local.hosted_zone)
+  private_zone = false
 }
 
 resource "tls_private_key" "private_key" {
@@ -29,9 +36,14 @@ resource "acme_certificate" "certificate" {
   account_key_pem           = join("", acme_registration.reg.*.account_key_pem)
   common_name               = var.domain_name
   subject_alternative_names = var.alternative_names
+  min_days_remaining        = 40
 
   dns_challenge {
     provider = "route53"
+
+    config = {
+      AWS_HOSTED_ZONE_ID = data.aws_route53_zone.zone_id
+    }
   }
 }
 
