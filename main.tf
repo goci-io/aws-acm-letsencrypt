@@ -43,8 +43,10 @@ resource "acme_certificate" "certificate" {
     provider = "route53"
 
     config = {
-      AWS_DEFAULT_REGION = var.aws_region
-      AWS_HOSTED_ZONE_ID = data.aws_route53_zone.validation.zone_id
+      AWS_DEFAULT_REGION    = var.aws_region
+      AWS_HOSTED_ZONE_ID    = data.aws_route53_zone.validation.zone_id
+      AWS_ACCESS_KEY_ID     = var.external_account ? aws_iam_access_key.dns_user.id : ""
+      AWS_ACCESS_SECRET_KEY = var.external_account ? aws_iam_access_key.dns_user.secret : ""
     }
   }
 }
