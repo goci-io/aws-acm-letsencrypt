@@ -3,7 +3,7 @@ locals {
   domain_parts    = split(".", var.domain_name)
   region          = var.region == "" ? var.aws_region : var.region
   hosted_zone     = join(".", slice(local.domain_parts, 1, length(local.domain_parts)))
-  account_key_pem = var.account_key_pem == "" ? join("", acme_registration.reg.*.account_key_pem) : var.account_key_pem
+  account_key_pem = var.account_key_pem == "" ? join("", acme_registration.registration.*.account_key_pem) : var.account_key_pem
 }
 
 module "label" {
@@ -26,7 +26,7 @@ resource "tls_private_key" "private_key" {
   algorithm = "RSA"
 }
 
-resource "acme_registration" "reg" {
+resource "acme_registration" "registration" {
   count            = var.enabled && var.account_key_pem == "" ? 1 : 0
   account_key_pem = join("", tls_private_key.private_key.*.private_key_pem)
   email_address   = var.certificate_email
