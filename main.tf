@@ -21,14 +21,14 @@ data "aws_route53_zone" "validation" {
   private_zone = false
 }
 
-resource "tls_private_key" "private_key" {
+resource "tls_private_key" "account" {
   count     = var.enabled ? 1 : 0
   algorithm = "RSA"
 }
 
 resource "acme_registration" "registration" {
   count            = var.enabled && var.account_key_pem == "" ? 1 : 0
-  account_key_pem = join("", tls_private_key.private_key.*.private_key_pem)
+  account_key_pem = join("", tls_private_key.account.*.private_key_pem)
   email_address   = var.certificate_email
 }
 
