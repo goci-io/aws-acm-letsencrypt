@@ -22,7 +22,7 @@ data "aws_route53_zone" "validation" {
 }
 
 resource "tls_private_key" "account" {
-  count     = var.enabled ? 1 : 0
+  count     = var.enabled && var.account_key_pem == "" ? 1 : 0
   algorithm = "RSA"
 }
 
