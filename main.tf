@@ -49,6 +49,10 @@ resource "acme_certificate" "certificate" {
       AWS_SECRET_ACCESS_KEY = var.external_account ? join("", aws_iam_access_key.dns_user.*.secret) : ""
     }
   }
+
+  lifecycle {
+    create_before_destroy = true
+  }
 }
 
 resource "aws_acm_certificate" "acme" {
