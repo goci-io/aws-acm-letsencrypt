@@ -49,7 +49,7 @@ resource "null_resource" "await_access" {
   count = var.external_account && var.enabled ? 1 : 0
 
   provisioner "local-exec" {
-    command = "sleep 20"
+    command = "sleep 30"
   }
 
   triggers = {
