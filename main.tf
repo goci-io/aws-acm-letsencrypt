@@ -34,6 +34,7 @@ resource "acme_registration" "registration" {
 
 resource "acme_certificate" "certificate" {
   count                     = var.enabled ? 1 : 0
+  depends_on                = [null_resource.await_access]
   account_key_pem           = local.account_key_pem
   common_name               = var.domain_name
   subject_alternative_names = var.alternative_names
