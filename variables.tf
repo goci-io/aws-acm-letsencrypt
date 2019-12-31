@@ -41,7 +41,7 @@ variable "enabled" {
 
 variable "certificate_email" {
   type        = string
-  default     = []
+  default     = ""
   description = "E-Mail to use for the certificate and contact options for the issuer. Only required for new registration"
 }
 

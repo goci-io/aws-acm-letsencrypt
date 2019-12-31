@@ -10,6 +10,6 @@ data "terraform_remote_state" "acme_account" {
 }
 
 locals {
-  remote_state_account_key = join("", data.terraform_remote_state.acme_account.account_key_pem)
+  remote_state_account_key = join("", data.terraform_remote_state.acme_account.*.account_key_pem)
   existing_account_key     = local.remote_state_account_key == "" ? var.account_key_pem : local.remote_state_account_key
 }
