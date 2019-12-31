@@ -68,6 +68,12 @@ variable "account_key_state_module" {
   description = "Reference to a remote state module with an output named account_key_pem"
 }
 
+variable "tf_bucket" {
+  type        = string
+  default     = ""
+  description = "Name of an S3 bucket to read remote state from" 
+}
+
 variable "region" {
   type        = string
   default     = ""
