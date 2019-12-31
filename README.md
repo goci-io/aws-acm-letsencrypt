@@ -34,7 +34,7 @@ module "acme" {
 | tags | Additional tags (e.g. map(`BusinessUnit`,`XYZ`) | `{}`
 | domain_name | The domain name to include in the certificate | - |
 | alternative_names | Subject alternative domain names | `[]` |
-| certificate_email | E-Mail address to use for the certificate and contact options. Only required of no existing account_key_pem was provided | `""` |
+| certificate_email | E-Mail address to use for the certificate and contact options. Only required if no existing account_key_pem is provided | `""` |
 | account_key_pem | Existing private key for your letsencrypt account | `""` |
 | account_key_state_module | Reference to remote state file with `account_key_pem` output | `""` |
 | acme_production | Overwrites stage detection for letsencrypt to production directory | `false` |
