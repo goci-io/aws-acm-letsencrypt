@@ -3,7 +3,7 @@ locals {
   domain_parts    = split(".", var.domain_name)
   region          = var.region == "" ? var.aws_region : var.region
   hosted_zone     = join(".", slice(local.domain_parts, 1, length(local.domain_parts)))
-  account_key_pem = var.account_key_pem == "" ? join("", acme_registration.registration.*.account_key_pem) : var.account_key_pem
+  account_key_pem = local.existing_account_key == "" ? module.acme_registration.account_key_pem : local.existing_account_key
 }
 
 module "label" {
@@ -21,15 +21,10 @@ data "aws_route53_zone" "validation" {
   private_zone = false
 }
 
-resource "tls_private_key" "account" {
-  count     = var.enabled && var.account_key_pem == "" ? 1 : 0
-  algorithm = "RSA"
-}
-
-resource "acme_registration" "registration" {
-  count            = var.enabled && var.account_key_pem == "" ? 1 : 0
-  account_key_pem = join("", tls_private_key.account.*.private_key_pem)
-  email_address   = var.certificate_email
+module "acme_registration" {
+  source            = "git::https://github.com/goci-io/letsencrypt-account.git?ref=tags/0.1.0"
+  enabled           = local.existing_account_key == "" && var.enabled
+  certificate_email = var.certificate_email
 }
 
 resource "acme_certificate" "certificate" {

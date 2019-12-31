@@ -3,7 +3,8 @@
 **Maintained by [@goci-io/prp-terraform](https://github.com/orgs/goci-io/teams/prp-terraform)**
 
 This module requests a new certificate from [letsencrypt](http://letsencrypt.org) and uploads it to AWS ACM. 
-The certificate validation is done via Route53 DNS.
+The certificate validation is done via Route53 DNS. 
+To avoid creating multiple letsencrypt accounts you can use the [letsencrypt-account](https://github.com/goci-io/letsencrypt-account) module.
 
 ### Usage
 
@@ -14,8 +15,9 @@ module "acme" {
   stage             = "staging"
   name              = "api"
   domain            = "api.staging.eu1.goci.io"
-  certificate_email = "certs<at>goci.io"
   aws_region        = "eu-central-1"
+
+  account_key_state_module = "path-to-remote-state-key.tfstate"
 }
 ```
 
@@ -32,6 +34,7 @@ module "acme" {
 | alternative_names | Subject alternative domain names | `[]` |
 | certificate_email | E-Mail address to use for the certificate and contact options | - |
 | account_key_pem | Existing private key for your letsencrypt account | `""` |
+| account_key_state_module | Reference to remote state file with `account_key_pem` output | `""` |
 | acme_production | Overwrites stage detection for letsencrypt to production directory | `false` |
 | enabled | Whether to create resources or not | `true` |
 | aws_region | AWS Region to deploy the ACM into. Note that sometimes AWS requires the certificate to be in us-east-1 | - |
