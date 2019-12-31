@@ -41,7 +41,8 @@ variable "enabled" {
 
 variable "certificate_email" {
   type        = string
-  description = "E-Mail to use for the certificate and contact options for the issuer"
+  default     = ""
+  description = "E-Mail to use for the certificate and contact options for the issuer. Only required for new registration"
 }
 
 variable "domain_name" {
@@ -59,6 +60,12 @@ variable "account_key_pem" {
   type        = string
   default     = ""
   description = "If private key for letsencrypt account already exists" 
+}
+
+variable "account_key_state_module" {
+  type        = string
+  default     = ""
+  description = "Reference to a remote state module with an output named account_key_pem"
 }
 
 variable "region" {
