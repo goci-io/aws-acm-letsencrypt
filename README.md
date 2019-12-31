@@ -4,7 +4,9 @@
 
 This module requests a new certificate from [letsencrypt](http://letsencrypt.org) and uploads it to AWS ACM. 
 The certificate validation is done via Route53 DNS. 
+
 To avoid creating multiple letsencrypt accounts you can use the [letsencrypt-account](https://github.com/goci-io/letsencrypt-account) module.
+This is the recommended use of letsencrypt.
 
 ### Usage
 
