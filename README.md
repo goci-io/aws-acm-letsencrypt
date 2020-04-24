@@ -2,6 +2,8 @@
 
 **Maintained by [@goci-io/prp-terraform](https://github.com/orgs/goci-io/teams/prp-terraform)**
 
+![Terraform Validate](https://github.com/goci-io/aws-acm-letsencrypt/workflows/Terraform%20Validate/badge.svg)
+
 This module requests a new certificate from [letsencrypt](http://letsencrypt.org) and uploads it to AWS ACM. 
 The certificate validation is done via Route53 DNS. 
 
