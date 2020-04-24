@@ -12,7 +12,7 @@ data "aws_iam_policy_document" "dns_change" {
   count = var.external_account && var.enabled ? 1 : 0
 
   statement {
-    effect  = "Allow"
+    effect = "Allow"
     actions = [
       "route53:GetChange",
       "route53:ChangeResourceRecordSets",
@@ -40,8 +40,8 @@ resource "aws_iam_user_policy" "attachment" {
 }
 
 resource "aws_iam_access_key" "dns_user" {
-  count      = var.external_account && var.enabled ? 1 : 0
-  user       = join("", aws_iam_user.dns_user.*.name)
+  count = var.external_account && var.enabled ? 1 : 0
+  user  = join("", aws_iam_user.dns_user.*.name)
 }
 
 resource "null_resource" "await_access" {

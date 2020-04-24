@@ -59,7 +59,7 @@ variable "alternative_names" {
 variable "account_key_pem" {
   type        = string
   default     = ""
-  description = "If private key for letsencrypt account already exists" 
+  description = "If private key for letsencrypt account already exists"
 }
 
 variable "account_key_state_module" {
@@ -71,7 +71,7 @@ variable "account_key_state_module" {
 variable "tf_bucket" {
   type        = string
   default     = ""
-  description = "Name of an S3 bucket to read remote state from" 
+  description = "Name of an S3 bucket to read remote state from"
 }
 
 variable "region" {
@@ -83,7 +83,7 @@ variable "region" {
 variable "acme_production" {
   type        = bool
   default     = false
-  description = "If true enforces the letsencrypt production directory" 
+  description = "If true enforces the letsencrypt production directory"
 }
 
 variable "aws_region" {
